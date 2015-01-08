@@ -14,6 +14,7 @@ public abstract class Movimiento {
     protected int fila;
     
     public Movimiento (int columna, Ficha turno){
+        this.fila = 0;
         this.columna = columna;
         this.turno = turno;
         

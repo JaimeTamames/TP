@@ -18,12 +18,13 @@ public class ReglasJuegoCuatroEnLinea {
      * @return true si se han dado 4 en linea y false en cc.
      */
     public static boolean cuatroEnLinea(Tablero t, Ficha turno, int f, int c) {
-        return ReglasJuegoCuatroEnLinea.columnaValida(t, c)
-                && ReglasJuegoCuatroEnLinea.filaValida(t, f)
-                && ReglasJuegoCuatroEnLinea.columnaConecta4(t, turno, f, c)
-                && ReglasJuegoCuatroEnLinea.filaConecta4(t, turno, f, c)
-                && ReglasJuegoCuatroEnLinea.diagonalConecta4DerToIz(t, turno, f, c)
-                && ReglasJuegoCuatroEnLinea.diagonalConecta4IzToDer(t, turno, f, c);
+        return (ReglasJuegoCuatroEnLinea.columnaValida(t, c)
+                && ReglasJuegoCuatroEnLinea.filaValida(t, f))
+                &&
+                (ReglasJuegoCuatroEnLinea.columnaConecta4(t, turno, f, c)
+                || ReglasJuegoCuatroEnLinea.filaConecta4(t, turno, f, c)
+                || ReglasJuegoCuatroEnLinea.diagonalConecta4DerToIz(t, turno, f, c)
+                || ReglasJuegoCuatroEnLinea.diagonalConecta4IzToDer(t, turno, f, c));
     }
 
     /**

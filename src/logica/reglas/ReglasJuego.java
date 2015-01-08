@@ -38,10 +38,10 @@ public abstract class ReglasJuego {
     public Ficha siguienteTurno(Ficha ultimo) {
 
         if (ultimo == Ficha.BLANCA) {
-            return Ficha.BLANCA;
+            return Ficha.NEGRA;
         }
 
-        return Ficha.NEGRA;
+        return Ficha.BLANCA;
     }
 
     /**

@@ -11,25 +11,25 @@ public class MovimientoConecta4 extends Movimiento {
 
     @Override
     public boolean ejecutaMovimiento(Tablero t) {
-        
-        if(this.columna >= t.getAncho() || this.columna < 0)
+
+        if (this.columna >= t.getAncho() || this.columna < 0) {
             return false;
-        
+        }
+
         int fil = 0;
         while (fil < t.getAlto()
                 && t.getFicha(fil, this.columna) != Ficha.VACIA) {
             fil++;
         }
-        
-        
-        
-        this.fila = (fil == t.getAlto()) ? 0 : fil;
-        
-        if(this.fila <= 0)
+
+        if (fil >= t.getAlto()) {
             return false;
+        } else {
+            this.fila = fil;
+        }
         
         t.ponerFicha(this.fila, this.columna, this.turno);
-        
+
         return true;
     }
 

@@ -90,7 +90,7 @@ public class Tablero {
         String resultado = "   ";
 
         for (int c = 0; c < this.ancho; c++) {
-            resultado += " " + c + " ";
+            resultado += " " + (c + 1) + " ";
         }
 
         resultado += Constantes.SALTO_LINEA;
@@ -104,7 +104,7 @@ public class Tablero {
 
         for (int f = this.alto - 1; f >= 0; f--) {
 
-            resultado += (" " + f + "|");
+            resultado += (" " + (f + 1) + "|");
 
             for (int c = 0; c < this.ancho; c++) {
 

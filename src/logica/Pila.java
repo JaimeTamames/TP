@@ -75,9 +75,8 @@ public class Pila {
      */
     private void redimensionar() {
 
-        int aux[] = new int[this.undoStack.length];
+        Movimiento aux[] = new Movimiento[this.numUndo];
         System.arraycopy(this.undoStack, 0, aux, 0, this.numUndo);
-
         int size = this.undoStack.length * 2;
         this.undoStack = new Movimiento[size];
         System.arraycopy(aux, 0, this.undoStack, 0, this.numUndo);
