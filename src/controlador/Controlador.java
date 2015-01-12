@@ -64,6 +64,7 @@ public class Controlador {
             System.out.println("2.- poner");
             System.out.println("3.- deshacer");
             System.out.println("4.- reiniciar");
+            System.out.println("5.- ayuda");
             System.out.print("Por favor, introduzca la accion que desea realizar: ");
 
             switch (this.in.next()) {
@@ -113,6 +114,17 @@ public class Controlador {
                 // Se reinicia por completo el juego y la partida
                 case "reiniciar":
                     this.partida.resetear(this.partida.getReglas());
+                    break;
+                // Se muestra la ayuda
+                case "ayuda":
+                    System.out.println();
+                    System.out.println("·El juego por defecto comienza en modo Conecta 4, si deseas");
+                    System.out.println("  cambiar el modo de juego debes introducir el comando jugar");
+                    System.out.println("  y introducir CO para jugar a Complica o C4 para jugar a Conecta4.");
+                    System.out.println("·El comando poner te permite poner las fichas en las columnas deseadas.");
+                    System.out.println("·El comando deshacer desahe los movimientos sin limite de veces.");
+                    System.out.println("·El comando reiniciar vuelve a iniciar una partida nueva.");
+                    System.out.println();
                     break;
                 // En caso de que no se introduzca una selccion valida se notifica y se pide de nuevo
                 default:
