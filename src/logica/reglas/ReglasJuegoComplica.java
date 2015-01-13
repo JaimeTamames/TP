@@ -13,20 +13,38 @@ public class ReglasJuegoComplica extends ReglasJuego {
 
     @Override
     public Ficha hayGanador(int f, int c, Ficha ultimo, Tablero tablero) {
-
-        // En esta version solo hay ganador cuando solo uno de los dos tiene 4 en linea.
-        
-        if (!(ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, Ficha.BLANCA, f, c)
-                ^ ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, Ficha.NEGRA, f, c))) {
-            return Ficha.VACIA;
-
-        } else {
+        // si la ficha estuviera en la ultima fila, se produce un caso especial
+        if (f < tablero.getAlto() - 1) {
             if (ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, ultimo, f, c)) {
                 return ultimo;
             } else {
-                return super.siguienteTurno(ultimo);
+                return Ficha.VACIA;
+            }
+        } else {
+
+            boolean enLineaBl = false;
+            boolean enLineaNG = false;
+
+            for (int i = 0; i < tablero.getAlto(); i++) {
+                if (ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, tablero.getFicha(i, c), i, c)) {
+                    if (tablero.getFicha(i, c) == Ficha.BLANCA) {
+                        enLineaBl = true;
+                    } else if (tablero.getFicha(i, c) == Ficha.NEGRA) {
+                        enLineaNG = true;
+                    }
+                }
             }
 
+            if (enLineaBl && enLineaNG) {
+                // Si ambos jugadores tienen 4 en linea, no hay ganador
+                return Ficha.VACIA;
+            } else if (enLineaBl) {
+                return Ficha.BLANCA;
+            } else if (enLineaNG) {
+                return Ficha.NEGRA;
+            } else {
+                return Ficha.VACIA;
+            }
         }
     }
 

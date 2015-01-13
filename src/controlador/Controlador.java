@@ -56,6 +56,7 @@ public class Controlador {
         while (!salir && !this.partida.isTerminada()) {
             // Se muestra el estado de la partida
             System.out.println("Tipo de juego: " + this.tipoJuego.toString());
+            System.out.print(Constantes.SALTO_LINEA);
             System.out.println(this.partida.toString());
             System.out.print(Constantes.SALTO_LINEA);
             // Se muestran las opciones a elegir
@@ -118,12 +119,11 @@ public class Controlador {
                 // Se muestra la ayuda
                 case "ayuda":
                     System.out.print(Constantes.SALTO_LINEA);
-                    System.out.println("·El juego por defecto comienza en modo Conecta 4, si deseas");
-                    System.out.println("  cambiar el modo de juego debes introducir el comando jugar");
-                    System.out.println("  y introducir CO para jugar a Complica o C4 para jugar a Conecta4.");
+                    System.out.println("·El juego por defecto comienza en modo Conecta 4, si deseas cambiar el modo de juego debes introducir el comando jugar e introducir CO para jugar a Complica o C4 para jugar a Conecta4.");
                     System.out.println("·El comando poner te permite poner las fichas en las columnas deseadas.");
-                    System.out.println("·El comando deshacer desahe los movimientos sin limite de veces.");
-                    System.out.println("·El comando reiniciar vuelve a iniciar una partida nueva.");
+                    System.out.println("·El comando deshacer deshace los movimientos realizados, si existen.");
+                    System.out.println("·El comando reiniciar vuelve a iniciar una partida nueva del juego actualmente seleccionado.");
+                    System.out.println("·El comando salir finaliza la ejecución del programa.");
                     System.out.print(Constantes.SALTO_LINEA);
                     break;
                 // En caso de que no se introduzca una selccion valida se notifica y se pide de nuevo

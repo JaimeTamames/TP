@@ -71,9 +71,9 @@ public class Partida {
             this.jugadas.apilar(mv);
 
             // Comprobamos si hay ganador
-            this.ganador = reglas.hayGanador(mv.getFila(), mv.getColumna(), this.turno, this.tablero);
+            this.ganador = this.reglas.hayGanador(mv.getFila(), mv.getColumna(), this.turno, this.tablero);
             // Terminamos la partida si hay tablas o existe un ganador
-            this.terminada = reglas.tablas(this.tablero) || (this.ganador != Ficha.VACIA);
+            this.terminada = ((this.ganador != Ficha.VACIA) || this.reglas.tablas(this.tablero));
 
             // Si no sucede nada de esto se cambia el turno
             if (!this.terminada) {
@@ -117,9 +117,9 @@ public class Partida {
 
     @Override
     public String toString() {
-        return ("Turno de: "
-                + this.turno
+        return (this.tablero.toString()
                 + Constantes.SALTO_LINEA
-                + this.tablero.toString());
+                + "Turno de: "
+                + this.turno);
     }
 }
