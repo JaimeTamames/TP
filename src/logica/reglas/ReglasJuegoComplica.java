@@ -26,11 +26,13 @@ public class ReglasJuegoComplica extends ReglasJuego {
             boolean enLineaNG = false;
 
             for (int i = 0; i < tablero.getAlto(); i++) {
-                if (ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, tablero.getFicha(i, c), i, c)) {
-                    if (tablero.getFicha(i, c) == Ficha.BLANCA) {
-                        enLineaBl = true;
-                    } else if (tablero.getFicha(i, c) == Ficha.NEGRA) {
-                        enLineaNG = true;
+                for (int j = 0; j < tablero.getAncho(); j++) {
+                    if (ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, tablero.getFicha(i, j), i, j)) {
+                        if (tablero.getFicha(i, j) == Ficha.BLANCA) {
+                            enLineaBl = true;
+                        } else if (tablero.getFicha(i, j) == Ficha.NEGRA) {
+                            enLineaNG = true;
+                        }
                     }
                 }
             }
