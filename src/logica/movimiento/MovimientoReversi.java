@@ -12,7 +12,7 @@ public class MovimientoReversi extends Movimiento {
     public MovimientoReversi(int fila, int columna, Ficha turno) {
         super(fila, columna, turno);
 
-        this.undoStack = new ArrayList<MovimientoReversi>();
+        this.undoStack = new ArrayList<>();
     }
 
     public boolean posicionValida(Tablero t) {
@@ -43,6 +43,9 @@ public class MovimientoReversi extends Movimiento {
         if (validaDiagonalInfIzq(t)) {
             valido = true;
         }
+        if (valido) {
+            t.ponerFicha(this.fila, this.columna, turno);
+        }
 
         return valido;
     }
@@ -71,7 +74,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(fil, this.columna, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
@@ -101,7 +103,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(fil, this.columna, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
@@ -131,7 +132,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(this.fila, col, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
@@ -161,7 +161,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(this.fila, col, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
@@ -195,7 +194,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(f, c, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
@@ -229,7 +227,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(f, c, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
@@ -263,7 +260,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(f, c, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
@@ -297,7 +293,6 @@ public class MovimientoReversi extends Movimiento {
                     MovimientoReversi m = new MovimientoReversi(f, c, turno);
                     undoStack.add(m);
                 }
-                t.ponerFicha(this.fila, this.columna, turno);
             }
         }
         return valido;
