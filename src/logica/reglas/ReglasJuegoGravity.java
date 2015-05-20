@@ -4,11 +4,11 @@ import logica.Constantes;
 import logica.Ficha;
 import logica.tablero.Tablero;
 
-public class ReglasJuegoConecta4 extends ReglasJuego {
+public class ReglasJuegoGravity extends ReglasJuego {
 
     @Override
     public Tablero iniciaTablero() {
-        return new Tablero(Constantes.ALTOC4, Constantes.ANCHOC4);
+        return new Tablero(Constantes.ALTOGR, Constantes.ANCHOGR);
     }
 
     @Override

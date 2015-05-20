@@ -1,9 +1,12 @@
-package logica;
+package logica.tablero;
+
+import logica.Constantes;
+import logica.Ficha;
 
 /**
- * Representacion del estado de un tablero de conecta4.
+ * Representacion del estado de un tablero.
  */
-public class Tablero {
+public class Tablero implements TableroSoloLectura {
 
     // Almacena el tipo de ficha que contine cada posicion del tablero
     private Ficha[][] tablero;
@@ -26,15 +29,25 @@ public class Tablero {
         this.reset();
     }
 
+    @Override
     public int getAlto() {
         return this.alto;
     }
 
+    @Override
     public int getAncho() {
         return this.ancho;
     }
 
+    @Override
     public Ficha getFicha(int fil, int col) {
+
+        try {
+            return this.tablero[fil][col];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(fil + " / " + col);
+        }
+
         return this.tablero[fil][col];
     }
 
@@ -50,7 +63,7 @@ public class Tablero {
 
     // Metodos de la clase--
     /**
-     * Inserta ua ficha del color dado en la posicion dada en el tablero.
+     * Inserta una ficha del color dado en la posicion dada en el tablero.
      *
      * @param fil fila donde insetar la ficha.
      * @param col columna donde insetar la ficha.
@@ -64,6 +77,22 @@ public class Tablero {
             numFichas--;
         } else {
             numFichas++;
+        }
+    }
+
+    /**
+     * Voltea una ficha del color dado en la posicion dada en el tablero.
+     *
+     * @param fil fila donde voltea la ficha.
+     * @param col columna donde voltea la ficha.
+     * @param color color de la ficha a voltear.
+     */
+    public void voltearFicha(int fil, int col, Ficha color) {
+
+        this.tablero[fil][col] = color;
+
+        if (color == Ficha.VACIA) {
+            numFichas--;
         }
     }
 
@@ -87,14 +116,14 @@ public class Tablero {
      * @return cadena de texto con el contenido del tablero
      */
     private String representarTablero() {
-        String resultado = "   ";
+        String resultado = "\t ";
 
         for (int c = 0; c < this.ancho; c++) {
             resultado += " " + (c + 1) + " ";
         }
 
         resultado += Constantes.SALTO_LINEA;
-        resultado += "   ";
+        resultado += "     \t ";
 
         for (int c = 0; c < this.ancho; c++) {
             resultado += " _ ";
@@ -104,13 +133,13 @@ public class Tablero {
 
         for (int f = this.alto - 1; f >= 0; f--) {
 
-            resultado += (" " + (f + 1) + "|");
+            resultado += (" " + (f + 1) + "\t|");
 
             for (int c = 0; c < this.ancho; c++) {
 
-                if (this.tablero[f][c] == Ficha.BLANCA) {
+                if (this.tablero[f][c] == Ficha.BLANCAS) {
                     resultado += " B ";
-                } else if (this.tablero[f][c] == Ficha.NEGRA) {
+                } else if (this.tablero[f][c] == Ficha.NEGRAS) {
                     resultado += " N ";
                 } else {
                     resultado += " O ";

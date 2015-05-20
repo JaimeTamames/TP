@@ -6,7 +6,7 @@ import logica.movimiento.Movimiento;
  * Representacion funcional de una pila de elementos. Apila los elementos de tal
  * forma que el ultimo elemento que entra es el primero que sale.
  */
-public class Pila {
+public class PilaMovimiento {
 
     private Movimiento[] undoStack;
     private int numUndo;
@@ -15,7 +15,7 @@ public class Pila {
      * Constructora por defecto. Asigna valores por defecto a los atributos.
      * Valor 10 a la dimension de undoStack. Valor 0 a numUndo.
      */
-    public Pila() {
+    public PilaMovimiento() {
         this.undoStack = new Movimiento[10];
         this.numUndo = 0;
     }
@@ -36,12 +36,10 @@ public class Pila {
      * @return ultimo elemento apilado.
      */
     public Movimiento desapilar() {
-        if (this.numUndo > 0) {
-            this.numUndo--;
-            return this.undoStack[this.numUndo];
-        } else {
-            return null;
-        }
+
+        this.numUndo--;
+        return this.undoStack[this.numUndo];
+
     }
 
     /**

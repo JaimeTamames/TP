@@ -1,10 +1,11 @@
 package logica.reglas;
 
 import logica.Ficha;
-import logica.Tablero;
+import logica.tablero.Tablero;
 
 /**
- * Contiene los metodos necesarios para comprobar un 4 en linea en un tablero dado.
+ * Contiene los metodos necesarios para comprobar un 4 en linea en un tablero
+ * dado.
  */
 public class ReglasJuegoCuatroEnLinea {
 
@@ -20,8 +21,7 @@ public class ReglasJuegoCuatroEnLinea {
     public static boolean cuatroEnLinea(Tablero t, Ficha turno, int f, int c) {
         return (ReglasJuegoCuatroEnLinea.columnaValida(t, c)
                 && ReglasJuegoCuatroEnLinea.filaValida(t, f))
-                &&
-                (ReglasJuegoCuatroEnLinea.columnaConecta4(t, turno, f, c)
+                && (ReglasJuegoCuatroEnLinea.columnaConecta4(t, turno, f, c)
                 || ReglasJuegoCuatroEnLinea.filaConecta4(t, turno, f, c)
                 || ReglasJuegoCuatroEnLinea.diagonalConecta4DerToIz(t, turno, f, c)
                 || ReglasJuegoCuatroEnLinea.diagonalConecta4IzToDer(t, turno, f, c));
@@ -65,8 +65,15 @@ public class ReglasJuegoCuatroEnLinea {
             return false;
         }
 
-        int filaInit = fil - 1;
+        int filaInit = fil + 1;
         int enLinea = 1;
+
+        while (ReglasJuegoCuatroEnLinea.filaValida(t, filaInit)
+                && (t.getFicha(filaInit, col) == color)) {
+            enLinea++;
+            filaInit++;
+        }
+        filaInit = fil - 1;
         while (ReglasJuegoCuatroEnLinea.filaValida(t, filaInit)
                 && (t.getFicha(filaInit, col) == color)) {
             enLinea++;
@@ -105,6 +112,7 @@ public class ReglasJuegoCuatroEnLinea {
             enLinea++;
             columnaInit--;
         }
+
         return enLinea >= 4;
     }
 

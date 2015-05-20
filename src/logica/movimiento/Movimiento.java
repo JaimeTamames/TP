@@ -1,40 +1,45 @@
 package logica.movimiento;
 
+import exceptions.MovimientoInvalido;
 import logica.Ficha;
-import logica.Tablero;
+import logica.tablero.Tablero;
 
-/**
- * Define el movimiento de uno de los juegos que admite la aplicacion.
- * @author rulo
- */
 public abstract class Movimiento {
-    
+
+    protected int fila;
     protected int columna;
     protected Ficha turno;
-    protected int fila;
-    
-    public Movimiento (int columna, Ficha turno){
+
+    public Movimiento(int columna, Ficha turno) {
         this.fila = 0;
         this.columna = columna;
         this.turno = turno;
-        
+
     }
-    
-    public Ficha getJugador(){
+
+    //Costructor con fila != 0 para gravity y reversi
+
+    public Movimiento(int fila, int columna, Ficha turno) {
+        this.fila = fila;
+        this.columna = columna;
+        this.turno = turno;
+
+    }
+
+    public Ficha getJugador() {
         return this.turno;
     }
-    
-    public int getColumna(){
+
+    public int getColumna() {
         return this.columna;
     }
-    
-    public int getFila(){
+
+    public int getFila() {
         return this.fila;
     }
-    
-    public abstract boolean ejecutaMovimiento(Tablero t);
-    
+
+    public abstract void ejecutaMovimiento(Tablero t) throws MovimientoInvalido;
+
     public abstract void undo(Tablero t);
-    
-    
+
 }

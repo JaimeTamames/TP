@@ -1,7 +1,7 @@
 package logica.reglas;
 
 import logica.Ficha;
-import logica.Tablero;
+import logica.tablero.Tablero;
 
 /**
  * Determina las reglas del juego que se esta jugando en la aplicacion.
@@ -37,11 +37,11 @@ public abstract class ReglasJuego {
      */
     public Ficha siguienteTurno(Ficha ultimo) {
 
-        if (ultimo == Ficha.BLANCA) {
-            return Ficha.NEGRA;
+        if (ultimo == Ficha.BLANCAS) {
+            return Ficha.NEGRAS;
         }
 
-        return Ficha.BLANCA;
+        return Ficha.BLANCAS;
     }
 
     /**
@@ -49,7 +49,5 @@ public abstract class ReglasJuego {
      *
      * @return ficha del color al que perteneceel turno.
      */
-    public Ficha jugadorInicial() {
-        return Ficha.BLANCA;
-    }
+    public abstract Ficha jugadorInicial();
 }

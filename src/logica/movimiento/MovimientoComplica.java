@@ -1,7 +1,8 @@
 package logica.movimiento;
 
+import exceptions.ColumnaIncorrecta;
 import logica.Ficha;
-import logica.Tablero;
+import logica.tablero.Tablero;
 
 public class MovimientoComplica extends Movimiento {
 
@@ -13,10 +14,10 @@ public class MovimientoComplica extends Movimiento {
     }
 
     @Override
-    public boolean ejecutaMovimiento(Tablero t) {
+    public void ejecutaMovimiento(Tablero t) throws ColumnaIncorrecta {
 
         if (this.columna >= t.getAncho() || this.columna < 0) {
-            return false;
+            throw new ColumnaIncorrecta(t.getAncho());
         }
 
         while (this.fila < t.getAlto()
@@ -39,8 +40,6 @@ public class MovimientoComplica extends Movimiento {
         }
 
         t.ponerFicha(this.fila, this.columna, this.turno);
-
-        return true;
     }
 
     @Override

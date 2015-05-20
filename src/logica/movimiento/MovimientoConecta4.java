@@ -1,7 +1,8 @@
 package logica.movimiento;
 
+import exceptions.*;
 import logica.Ficha;
-import logica.Tablero;
+import logica.tablero.Tablero;
 
 public class MovimientoConecta4 extends Movimiento {
 
@@ -10,10 +11,10 @@ public class MovimientoConecta4 extends Movimiento {
     }
 
     @Override
-    public boolean ejecutaMovimiento(Tablero t) {
+    public void ejecutaMovimiento(Tablero t) throws MovimientoInvalido {
 
         if (this.columna >= t.getAncho() || this.columna < 0) {
-            return false;
+            throw new ColumnaIncorrecta(t.getAncho());
         }
 
         int fil = 0;
@@ -23,14 +24,12 @@ public class MovimientoConecta4 extends Movimiento {
         }
 
         if (fil >= t.getAlto()) {
-            return false;
+            throw new ColumnaLlena(this.columna);
         } else {
             this.fila = fil;
         }
-        
-        t.ponerFicha(this.fila, this.columna, this.turno);
 
-        return true;
+        t.ponerFicha(this.fila, this.columna, this.turno);
     }
 
     @Override

@@ -2,7 +2,7 @@ package logica.reglas;
 
 import logica.Constantes;
 import logica.Ficha;
-import logica.Tablero;
+import logica.tablero.Tablero;
 
 public class ReglasJuegoComplica extends ReglasJuego {
 
@@ -26,13 +26,11 @@ public class ReglasJuegoComplica extends ReglasJuego {
             boolean enLineaNG = false;
 
             for (int i = 0; i < tablero.getAlto(); i++) {
-                for (int j = 0; j < tablero.getAncho(); j++) {
-                    if (ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, tablero.getFicha(i, j), i, j)) {
-                        if (tablero.getFicha(i, j) == Ficha.BLANCA) {
-                            enLineaBl = true;
-                        } else if (tablero.getFicha(i, j) == Ficha.NEGRA) {
-                            enLineaNG = true;
-                        }
+                if (ReglasJuegoCuatroEnLinea.cuatroEnLinea(tablero, tablero.getFicha(i, c), i, c)) {
+                    if (tablero.getFicha(i, c) == Ficha.BLANCAS) {
+                        enLineaBl = true;
+                    } else if (tablero.getFicha(i, c) == Ficha.NEGRAS) {
+                        enLineaNG = true;
                     }
                 }
             }
@@ -41,9 +39,9 @@ public class ReglasJuegoComplica extends ReglasJuego {
                 // Si ambos jugadores tienen 4 en linea, no hay ganador
                 return Ficha.VACIA;
             } else if (enLineaBl) {
-                return Ficha.BLANCA;
+                return Ficha.BLANCAS;
             } else if (enLineaNG) {
-                return Ficha.NEGRA;
+                return Ficha.NEGRAS;
             } else {
                 return Ficha.VACIA;
             }
@@ -56,4 +54,8 @@ public class ReglasJuegoComplica extends ReglasJuego {
         return false;
     }
 
+    @Override
+    public Ficha jugadorInicial() {
+        return Ficha.BLANCAS;
+    }
 }
