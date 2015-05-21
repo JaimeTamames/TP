@@ -56,4 +56,9 @@ public class ReglasJuegoReversi extends ReglasJuego {
     public boolean tablas(Tablero t) {
         return t.isCompleto();
     }
+    
+    @Override
+    public Ficha jugadorInicial() {
+        return Ficha.NEGRAS;
+    }
 }

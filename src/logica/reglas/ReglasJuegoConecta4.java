@@ -25,4 +25,8 @@ public class ReglasJuegoConecta4 extends ReglasJuego {
         return t.isCompleto();
     }
 
+    @Override
+    public Ficha jugadorInicial() {
+        return Ficha.BLANCAS;
+    }
 }

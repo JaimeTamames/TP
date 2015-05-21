@@ -117,8 +117,4 @@ public class ControladorConsola {
             return this.jugadorN;
         }
     }
-    
-    public void ponerAutomatico(){
-        this.partida.getMovAutomatico();
-    }
 }

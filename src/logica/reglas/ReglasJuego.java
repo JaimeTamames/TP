@@ -49,7 +49,5 @@ public abstract class ReglasJuego {
      *
      * @return ficha del color al que perteneceel turno.
      */
-    public Ficha jugadorInicial() {
-        return Ficha.BLANCAS;
-    }
+    public abstract Ficha jugadorInicial();
 }

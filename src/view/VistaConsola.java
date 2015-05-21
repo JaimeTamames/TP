@@ -1,7 +1,6 @@
 package view;
 
 import exceptions.MovimientoInvalido;
-import logica.Constantes;
 import logica.Ficha;
 import logica.tablero.TableroSoloLectura;
 import observador.Observador;

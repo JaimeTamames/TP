@@ -25,4 +25,8 @@ public class ReglasJuegoGravity extends ReglasJuego {
         return t.isCompleto();
     }
 
+    @Override
+    public Ficha jugadorInicial() {
+        return Ficha.BLANCAS;
+    }
 }

@@ -54,4 +54,8 @@ public class ReglasJuegoComplica extends ReglasJuego {
         return false;
     }
 
+    @Override
+    public Ficha jugadorInicial() {
+        return Ficha.BLANCAS;
+    }
 }
