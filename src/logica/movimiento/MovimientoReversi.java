@@ -15,42 +15,42 @@ public class MovimientoReversi extends Movimiento {
         this.undoStack = new ArrayList<>();
     }
 
-    public boolean posicionValida(Tablero t) {
+    public boolean posicionValida(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
-        if (validaPorDebajo(t)) {
+        if (validaPorDebajo(t, esComprobacion)) {
             valido = true;
         }
-        if (validaPorEncima(t)) {
+        if (validaPorEncima(t, esComprobacion)) {
             valido = true;
         }
-        if (validaPorDerecha(t)) {
+        if (validaPorDerecha(t, esComprobacion)) {
             valido = true;
         }
-        if (validaPorIzquierda(t)) {
+        if (validaPorIzquierda(t, esComprobacion)) {
             valido = true;
         }
-        if (validaDiagonalSupDer(t)) {
+        if (validaDiagonalSupDer(t, esComprobacion)) {
             valido = true;
         }
-        if (validaDiagonalInfDer(t)) {
+        if (validaDiagonalInfDer(t, esComprobacion)) {
             valido = true;
         }
-        if (validaDiagonalSupIzq(t)) {
+        if (validaDiagonalSupIzq(t, esComprobacion)) {
             valido = true;
         }
-        if (validaDiagonalInfIzq(t)) {
+        if (validaDiagonalInfIzq(t, esComprobacion)) {
             valido = true;
         }
-        if (valido) {
+        if (valido && !esComprobacion) {
             t.ponerFicha(this.fila, this.columna, turno);
         }
 
         return valido;
     }
 
-    private boolean validaPorEncima(Tablero t) {
+    private boolean validaPorEncima(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -68,18 +68,20 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas != 0 && t.getFicha(f, this.columna) == this.turno) {
                 valido = true;
 
-                for (int fil = f - 1; fil > this.fila; fil--) {
+                if (!esComprobacion) {
+                    for (int fil = f - 1; fil > this.fila; fil--) {
 
-                    t.voltearFicha(fil, this.columna, turno);
-                    MovimientoReversi m = new MovimientoReversi(fil, this.columna, turno);
-                    undoStack.add(m);
+                        t.voltearFicha(fil, this.columna, turno);
+                        MovimientoReversi m = new MovimientoReversi(fil, this.columna, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    private boolean validaPorDebajo(Tablero t) {
+    private boolean validaPorDebajo(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -97,18 +99,20 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas != 0 && t.getFicha(f, this.columna) == this.turno) {
                 valido = true;
 
-                for (int fil = f + 1; fil < this.fila; fil++) {
+                if (!esComprobacion) {
+                    for (int fil = f + 1; fil < this.fila; fil++) {
 
-                    t.voltearFicha(fil, this.columna, turno);
-                    MovimientoReversi m = new MovimientoReversi(fil, this.columna, turno);
-                    undoStack.add(m);
+                        t.voltearFicha(fil, this.columna, turno);
+                        MovimientoReversi m = new MovimientoReversi(fil, this.columna, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    private boolean validaPorDerecha(Tablero t) {
+    private boolean validaPorDerecha(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -126,18 +130,20 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas != 0 && t.getFicha(this.fila, c) == this.turno) {
                 valido = true;
 
-                for (int col = c - 1; col > this.columna; col--) {
+                if (!esComprobacion) {
+                    for (int col = c - 1; col > this.columna; col--) {
 
-                    t.voltearFicha(this.fila, col, turno);
-                    MovimientoReversi m = new MovimientoReversi(this.fila, col, turno);
-                    undoStack.add(m);
+                        t.voltearFicha(this.fila, col, turno);
+                        MovimientoReversi m = new MovimientoReversi(this.fila, col, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    private boolean validaPorIzquierda(Tablero t) {
+    private boolean validaPorIzquierda(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -155,18 +161,20 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas > 0 && t.getFicha(this.fila, c) == this.turno) {
                 valido = true;
 
-                for (int col = c + 1; col < this.columna; col++) {
+                if (!esComprobacion) {
+                    for (int col = c + 1; col < this.columna; col++) {
 
-                    t.voltearFicha(this.fila, col, turno);
-                    MovimientoReversi m = new MovimientoReversi(this.fila, col, turno);
-                    undoStack.add(m);
+                        t.voltearFicha(this.fila, col, turno);
+                        MovimientoReversi m = new MovimientoReversi(this.fila, col, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    private boolean validaDiagonalSupDer(Tablero t) {
+    private boolean validaDiagonalSupDer(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -186,20 +194,22 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas != 0 && t.getFicha(f, c) == this.turno) {
                 valido = true;
 
-                while (numFichas > 0) {
-                    numFichas--;
-                    f--;
-                    c--;
-                    t.voltearFicha(f, c, turno);
-                    MovimientoReversi m = new MovimientoReversi(f, c, turno);
-                    undoStack.add(m);
+                if (!esComprobacion) {
+                    while (numFichas > 0) {
+                        numFichas--;
+                        f--;
+                        c--;
+                        t.voltearFicha(f, c, turno);
+                        MovimientoReversi m = new MovimientoReversi(f, c, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    private boolean validaDiagonalSupIzq(Tablero t) {
+    private boolean validaDiagonalSupIzq(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -219,20 +229,22 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas != 0 && t.getFicha(f, c) == this.turno) {
                 valido = true;
 
-                while (numFichas > 0) {
-                    numFichas--;
-                    f--;
-                    c++;
-                    t.voltearFicha(f, c, turno);
-                    MovimientoReversi m = new MovimientoReversi(f, c, turno);
-                    undoStack.add(m);
+                if (!esComprobacion) {
+                    while (numFichas > 0) {
+                        numFichas--;
+                        f--;
+                        c++;
+                        t.voltearFicha(f, c, turno);
+                        MovimientoReversi m = new MovimientoReversi(f, c, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    private boolean validaDiagonalInfDer(Tablero t) {
+    private boolean validaDiagonalInfDer(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -252,20 +264,22 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas != 0 && t.getFicha(f, c) == this.turno) {
                 valido = true;
 
-                while (numFichas > 0) {
-                    numFichas--;
-                    f++;
-                    c--;
-                    t.voltearFicha(f, c, turno);
-                    MovimientoReversi m = new MovimientoReversi(f, c, turno);
-                    undoStack.add(m);
+                if (!esComprobacion) {
+                    while (numFichas > 0) {
+                        numFichas--;
+                        f++;
+                        c--;
+                        t.voltearFicha(f, c, turno);
+                        MovimientoReversi m = new MovimientoReversi(f, c, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    private boolean validaDiagonalInfIzq(Tablero t) {
+    private boolean validaDiagonalInfIzq(Tablero t, boolean esComprobacion) {
 
         boolean valido = false;
 
@@ -285,35 +299,38 @@ public class MovimientoReversi extends Movimiento {
             if (numFichas != 0 && t.getFicha(f, c) == this.turno) {
                 valido = true;
 
-                while (numFichas > 0) {
-                    numFichas--;
-                    f++;
-                    c++;
-                    t.voltearFicha(f, c, turno);
-                    MovimientoReversi m = new MovimientoReversi(f, c, turno);
-                    undoStack.add(m);
+                if (!esComprobacion) {
+                    while (numFichas > 0) {
+                        numFichas--;
+                        f++;
+                        c++;
+                        t.voltearFicha(f, c, turno);
+                        MovimientoReversi m = new MovimientoReversi(f, c, turno);
+                        undoStack.add(m);
+                    }
                 }
             }
         }
         return valido;
     }
 
-    public static int fichasVolteadas(int f, int c, Tablero t) {
+    public boolean posibleSiguienteTurno(Tablero t) {
 
-        if (t.getFicha(f, c) != Ficha.VACIA) {
-            
-        } else {
+        boolean posible = false;
 
-            if (c >= t.getAncho() || c < 0
-                    || f >= t.getAlto() || f < 0) {
-                return 0;
-            }
+        for (int f = 0; f < t.getAlto(); f++) {
+            for (int c = 0; c < t.getAncho(); c++) {
 
-            if (t.getFicha(f, c) != Ficha.VACIA) {
-                return 0;
+                if (t.getFicha(f, c) == Ficha.VACIA && !posible) {
+                    this.fila = f;
+                    this.columna = c;
+                    posible = this.posicionValida(t, true);
+                }
+
             }
         }
-        return 0;
+
+        return posible;
     }
 
     @Override
@@ -329,7 +346,7 @@ public class MovimientoReversi extends Movimiento {
         }
 
         //Comprueba si la posicion es valida y ejecuta el movimiento
-        if (!posicionValida(t)) {
+        if (!posicionValida(t, false)) {
             throw new MovimientoInvalido("Posicion no valida");
         }
     }

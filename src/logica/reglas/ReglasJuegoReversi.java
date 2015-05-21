@@ -26,8 +26,8 @@ public class ReglasJuegoReversi extends ReglasJuego {
 
         int fichasBlancas = 0, fichasNegras = 0, fichasVacias = 0;
 
-        for (int fila = 0; fila < Constantes.ALTORE; fila++) {
-            for (int columna = 0; columna < Constantes.ANCHORE; columna++) {
+        for (int fila = 0; fila < tablero.getAlto(); fila++) {
+            for (int columna = 0; columna < tablero.getAncho(); columna++) {
 
                 if (tablero.getFicha(fila, columna) == Ficha.BLANCAS) {
                     fichasBlancas++;
