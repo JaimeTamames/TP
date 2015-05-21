@@ -9,7 +9,8 @@ public class JugadorAleatorioReversi extends Jugador {
     @Override
     public void obtenFilaColumna(Tablero tab, Ficha color) {
         boolean fin = false;
-        int col = 0, fil = 0;
+        //empezamos en la celda superior izquierda del marco que rodea al tavlero central de 2x2
+        int col = (tab.getAlto() / 2) - 2, fil = (tab.getAlto() / 2) - 2;
         while (!fin) {
             col = (int) (tab.getAncho() * Math.random());
             fil = (int) (tab.getAlto() * Math.random());

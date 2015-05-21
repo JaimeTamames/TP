@@ -298,6 +298,24 @@ public class MovimientoReversi extends Movimiento {
         return valido;
     }
 
+    public static int fichasVolteadas(int f, int c, Tablero t) {
+
+        if (t.getFicha(f, c) != Ficha.VACIA) {
+            
+        } else {
+
+            if (c >= t.getAncho() || c < 0
+                    || f >= t.getAlto() || f < 0) {
+                return 0;
+            }
+
+            if (t.getFicha(f, c) != Ficha.VACIA) {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
     @Override
     public void ejecutaMovimiento(Tablero t) throws MovimientoInvalido {
 
