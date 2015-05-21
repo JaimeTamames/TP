@@ -40,11 +40,11 @@ public class ControladorGUI {
     }
 
     public void undo() {
-        this.partida.deshacer();
+        this.partida.deshacer(this.factoria);
     }
 
     public void poner(int fila, int columna) {
-        partida.ejecutaMovimiento(this.factoria.crearMovimiento(fila, columna, this.partida.getTurno()));
+        this.partida.ejecutaMovimiento(this.factoria.crearMovimiento(fila, columna, this.partida.getTurno()), factoria);
     }
 
     public void reset(FactoriaJuego factoria) {

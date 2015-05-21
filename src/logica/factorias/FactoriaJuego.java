@@ -15,5 +15,7 @@ public interface FactoriaJuego {
     public Jugador crearJugadorAleatorio();
 
     public Jugador crearJugadorHumano(Scanner sc);
-   
+
+    @Override
+    public String toString();
 }
