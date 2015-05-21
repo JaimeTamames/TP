@@ -14,7 +14,7 @@ public class JugadorAleatorioReversi extends Jugador {
             col = (int) (tab.getAncho() * Math.random());
             fil = (int) (tab.getAlto() * Math.random());
             if (Ficha.VACIA == tab.getFicha(fil, col)) {
-                fin = true;
+                fin = true; 
                 this.columna = col;
                 this.fila = fil;
             }

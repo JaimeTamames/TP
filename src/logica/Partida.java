@@ -134,6 +134,9 @@ public class Partida implements Observable {
         }
         //Calcula un movimiento aleatorio, o, en su defecto inteligente (el que mas fichas gire)
         
+        
+        
+        
         //llama a EjecutaMovimiento con el movimiento premiamente calculado en el paso anterior       
         return null;
         
