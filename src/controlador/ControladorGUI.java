@@ -44,7 +44,7 @@ public class ControladorGUI {
     }
 
     public void poner(int fila, int columna) {
-        partida.ejecutaMovimiento(this.factoria.crearMovimiento(fila, columna, this.partida.getTurno()));
+        this.partida.ejecutaMovimiento(this.factoria.crearMovimiento(fila, columna, this.partida.getTurno()));
     }
 
     public void reset(FactoriaJuego factoria) {

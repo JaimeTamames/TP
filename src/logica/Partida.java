@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import logica.factorias.FactoriaJuego;
 import logica.jugadores.Jugador;
 import logica.movimiento.Movimiento;
-import logica.movimiento.MovimientoReversi;
 import logica.reglas.ReglasJuego;
 import logica.tablero.TableroSoloLectura;
 import observable.Observable;
@@ -65,19 +64,12 @@ public class Partida implements Observable {
     }
 
     /**
-     * Cambia el turno de la partida
-     */
-    private Ficha cambiarTurno() {
-        return this.turno = this.reglas.siguienteTurno(this.turno);
-    }
-
-    /**
      * Ejecuta un movimiento en el tablero. La jugada queda registrada en la
      * pila.
      *
      * @param mv
      */
-    public void ejecutaMovimiento(Movimiento mv, FactoriaJuego factoria) {
+    public void ejecutaMovimiento(Movimiento mv) {
 
         if (this.terminada) {
             for (Observador o : this.obs) {
@@ -109,18 +101,11 @@ public class Partida implements Observable {
                     // Si no sucede nada de esto se cambia el turno
                     if (!this.terminada) {
 
-                        //Revisar
-                        if ("Reversi".equals(factoria.toString())) {
-
-                            MovimientoReversi m = new MovimientoReversi(0, 0, this.cambiarTurno());
-                            if (m.posibleSiguienteTurno(this.tablero)) {
-
-                                this.cambiarTurno();
-                            }
-                        }
+                        
+                        this.turno = (this.reglas.esPosibleMover(this.tablero, this.reglas.siguienteTurno(this.turno))) ? this.reglas.siguienteTurno(this.turno) : this.turno;
 
                         for (Observador o : this.obs) {
-                            o.onMovimientoTerminado(this.tablero, this.turno, this.cambiarTurno());
+                            o.onMovimientoTerminado(this.tablero, this.turno, this.turno);
                         }
                     } else {
                         for (Observador o : this.obs) {
@@ -137,7 +122,7 @@ public class Partida implements Observable {
         }
     }
 
-    public Movimiento getMovAutomatico(){
+    public Movimiento getMovAutomatico() {
         //Esperar 2 segundos
         try {
             Thread.sleep(2000);
@@ -145,15 +130,12 @@ public class Partida implements Observable {
             ex.getMessage();
         }
         //Calcula un movimiento aleatorio, o, en su defecto inteligente (el que mas fichas gire)
-        
-        
-        
-        
+
         //llama a EjecutaMovimiento con el movimiento premiamente calculado en el paso anterior       
         return null;
-        
+
     }
-    
+
     public Movimiento getMovimiento(FactoriaJuego factoria, Jugador jugador) {
 
         return jugador.getMovimiento(factoria, this.tablero, this.turno);
@@ -164,7 +146,7 @@ public class Partida implements Observable {
      * Deshace la ultima jugada de la partida.
      *
      */
-    public void deshacer(FactoriaJuego factoria) {
+    public void deshacer() {
         Movimiento m;
 
         if (this.jugadas.getNumUndo() == 0) {
@@ -175,17 +157,7 @@ public class Partida implements Observable {
             m = this.jugadas.desapilar();
             m.undo(this.tablero);
 
-            //Revisar
-            if ("Reversi".equals(factoria.toString())) {
-
-                MovimientoReversi mr = new MovimientoReversi(0, 0, this.cambiarTurno());
-                if (!mr.posibleSiguienteTurno(this.tablero)) {
-
-                    this.cambiarTurno();
-                }
-            } else {
-                this.cambiarTurno();
-            }
+            this.turno = m.getJugador();
 
             for (Observador o : this.obs) {
                 o.onDeshacer(this.tablero, this.turno, this.jugadas.getNumUndo() > 0);

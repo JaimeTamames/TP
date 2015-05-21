@@ -29,4 +29,9 @@ public class ReglasJuegoConecta4 extends ReglasJuego {
     public Ficha jugadorInicial() {
         return Ficha.BLANCAS;
     }
+
+    @Override
+    public boolean esPosibleMover(Tablero t, Ficha turno) {
+        return true;
+    }
 }

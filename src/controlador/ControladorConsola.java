@@ -73,7 +73,7 @@ public class ControladorConsola {
     }
 
     public void undo() {
-        this.partida.deshacer(this.factoria);
+        this.partida.deshacer();
     }
 
     public void ejecutarMovimiento() {
@@ -82,7 +82,7 @@ public class ControladorConsola {
 
         mv = this.partida.getMovimiento(this.factoria, this.getJugador());
 
-        this.partida.ejecutaMovimiento(mv, factoria);
+        this.partida.ejecutaMovimiento(mv);
 
     }
 

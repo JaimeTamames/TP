@@ -50,4 +50,7 @@ public abstract class ReglasJuego {
      * @return ficha del color al que perteneceel turno.
      */
     public abstract Ficha jugadorInicial();
+    
+    
+    public abstract boolean esPosibleMover(Tablero t, Ficha turno);
 }

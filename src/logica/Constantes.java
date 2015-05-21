@@ -11,8 +11,8 @@ public class Constantes {
     public static int ALTOGR = 10;
     public static int ANCHOGR = 10;
 
-    public static int ALTORE = 8;
-    public static int ANCHORE = 8;
+    public static int ALTORE = 4;
+    public static int ANCHORE = 4;
 
     public static final String SALTO_LINEA = System.getProperty("line.separator");
 }
