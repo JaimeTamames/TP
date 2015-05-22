@@ -6,6 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import logica.modosDeJuego.TipoTurno;
 
 public class JPanelGestionJugadores extends JPanel {
 
@@ -15,34 +16,25 @@ public class JPanelGestionJugadores extends JPanel {
     private JComboBox jComboBoxJugadorNegras;
 
     public JPanelGestionJugadores() {
-
-        this.init();
-    }
-
-    public JLabel getjLabelJugadorBlancas() {
-        return jLabelJugadorBlancas;
+        this.initComponents();
     }
 
     public JComboBox getjComboBoxJugadorBlancas() {
         return jComboBoxJugadorBlancas;
     }
 
-    public JLabel getjLabelJugadorNegras() {
-        return jLabelJugadorNegras;
-    }
-
     public JComboBox getjComboBoxJugadorNegras() {
         return jComboBoxJugadorNegras;
     }
 
-    public void init() {
+    public void initComponents() {
 
         this.setLayout(new FlowLayout());
-        this.setPreferredSize(new Dimension(400, 100));
-        this.setMinimumSize(new Dimension(400, 100));
+        this.setPreferredSize(new Dimension(260, 100));
+        this.setMinimumSize(new Dimension(260, 100));
         this.setBorder(BorderFactory.createTitledBorder("Gesión de jugadores"));
 
-        String tiposJugadores[] = {"Humano", "Aleatorio"};
+        TipoTurno tiposJugadores[] = {TipoTurno.HUMANO, TipoTurno.AUTOMATICO};
 
         this.jLabelJugadorBlancas = new JLabel("Blancas");
         this.jComboBoxJugadorBlancas = new JComboBox(tiposJugadores);

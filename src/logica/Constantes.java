@@ -13,6 +13,8 @@ public class Constantes {
 
     public static int ALTORE = 8;
     public static int ANCHORE = 8;
+    
+    public static int MSRETARDOJUGADORAUTOMATICO = 500;
 
     public static final String SALTO_LINEA = System.getProperty("line.separator");
 }

@@ -19,12 +19,28 @@ public class ReglasJuegoCuatroEnLinea {
      * @return true si se han dado 4 en linea y false en cc.
      */
     public static boolean cuatroEnLinea(Tablero t, Ficha turno, int f, int c) {
-        return (ReglasJuegoCuatroEnLinea.columnaValida(t, c)
-                && ReglasJuegoCuatroEnLinea.filaValida(t, f))
-                && (ReglasJuegoCuatroEnLinea.columnaConecta4(t, turno, f, c)
-                || ReglasJuegoCuatroEnLinea.filaConecta4(t, turno, f, c)
-                || ReglasJuegoCuatroEnLinea.diagonalConecta4DerToIz(t, turno, f, c)
-                || ReglasJuegoCuatroEnLinea.diagonalConecta4IzToDer(t, turno, f, c));
+
+            return ((ReglasJuegoCuatroEnLinea.columnaValida(t, c)
+                    && ReglasJuegoCuatroEnLinea.filaValida(t, f))
+                    && (ReglasJuegoCuatroEnLinea.columnaConecta4(t, turno, f, c) >= 4
+                    || ReglasJuegoCuatroEnLinea.filaConecta4(t, turno, f, c) >= 4
+                    || ReglasJuegoCuatroEnLinea.diagonalConecta4DerToIz(t, turno, f, c) >= 4
+                    || ReglasJuegoCuatroEnLinea.diagonalConecta4IzToDer(t, turno, f, c) >= 4));
+            
+    }
+    
+    public static int sumaEnLinea(Tablero t, Ficha turno, int f, int c){
+    
+        if (ReglasJuegoCuatroEnLinea.columnaValida(t, c)
+                    && ReglasJuegoCuatroEnLinea.filaValida(t, f)){
+        
+            return (ReglasJuegoCuatroEnLinea.columnaConecta4(t, turno, f, c)
+                    + ReglasJuegoCuatroEnLinea.filaConecta4(t, turno, f, c)
+                    + ReglasJuegoCuatroEnLinea.diagonalConecta4DerToIz(t, turno, f, c)
+                    + ReglasJuegoCuatroEnLinea.diagonalConecta4IzToDer(t, turno, f, c)) - 3;
+        }
+        
+        return 0;
     }
 
     /**
@@ -34,7 +50,7 @@ public class ReglasJuegoCuatroEnLinea {
      * @param f fila
      * @return true si es valida y false en caso contrario
      */
-    private static boolean filaValida(Tablero t, int f) {
+    public static boolean filaValida(Tablero t, int f) {
         return (0 <= f && f < t.getAlto());
     }
 
@@ -45,7 +61,7 @@ public class ReglasJuegoCuatroEnLinea {
      * @param c columna
      * @return true si es valida y false en caso contrario
      */
-    private static boolean columnaValida(Tablero t, int c) {
+    public static boolean columnaValida(Tablero t, int c) {
         return (0 <= c && c < t.getAncho());
     }
 
@@ -59,10 +75,10 @@ public class ReglasJuegoCuatroEnLinea {
      * @param col columna donde se situa la ficha dada.
      * @return true si se conectan 4 fichas, false en caso contrario.
      */
-    private static boolean columnaConecta4(Tablero t, Ficha color, int fil, int col) {
+    private static int columnaConecta4(Tablero t, Ficha color, int fil, int col) {
 
         if (!ReglasJuegoCuatroEnLinea.columnaValida(t, col)) {
-            return false;
+            return 0;
         }
 
         int filaInit = fil + 1;
@@ -80,7 +96,7 @@ public class ReglasJuegoCuatroEnLinea {
             filaInit--;
         }
 
-        return enLinea >= 4;
+        return enLinea;
     }
 
     /**
@@ -92,10 +108,10 @@ public class ReglasJuegoCuatroEnLinea {
      * @param col columna donde se situa la ficha dada.
      * @return true si se conectan 4 fichas, false en caso contrario.
      */
-    private static boolean filaConecta4(Tablero t, Ficha color, int fil, int col) {
+    private static int filaConecta4(Tablero t, Ficha color, int fil, int col) {
 
         if (!ReglasJuegoCuatroEnLinea.filaValida(t, fil)) {
-            return false;
+            return 0;
         }
 
         int columnaInit = col + 1;
@@ -113,7 +129,7 @@ public class ReglasJuegoCuatroEnLinea {
             columnaInit--;
         }
 
-        return enLinea >= 4;
+        return enLinea;
     }
 
     /**
@@ -125,7 +141,7 @@ public class ReglasJuegoCuatroEnLinea {
      * @param col columna donde se situa la ficha dada.
      * @return true si se conectan 4 fichas, false en caso contrario.
      */
-    private static boolean diagonalConecta4DerToIz(Tablero t, Ficha color, int fil, int col) {
+    private static int diagonalConecta4DerToIz(Tablero t, Ficha color, int fil, int col) {
 
         int columnaInit = col + 1;
         int filaInit = fil + 1;
@@ -145,7 +161,7 @@ public class ReglasJuegoCuatroEnLinea {
             filaInit--;
         }
 
-        return enLinea >= 4;
+        return enLinea;
 
     }
 
@@ -158,7 +174,7 @@ public class ReglasJuegoCuatroEnLinea {
      * @param col columna donde se situa la ficha dada.
      * @return true si se conectan 4 fichas, false en caso contrario.
      */
-    private static boolean diagonalConecta4IzToDer(Tablero t, Ficha color, int fil, int col) {
+    private static int diagonalConecta4IzToDer(Tablero t, Ficha color, int fil, int col) {
 
         int columnaInit = col + 1;
         int filaInit = fil - 1;
@@ -179,7 +195,9 @@ public class ReglasJuegoCuatroEnLinea {
             filaInit++;
         }
 
-        return enLinea >= 4;
+        return enLinea;
     }
+    
+    
 
 }

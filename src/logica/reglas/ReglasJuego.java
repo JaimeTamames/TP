@@ -2,6 +2,7 @@ package logica.reglas;
 
 import logica.Ficha;
 import logica.tablero.Tablero;
+import logica.tablero.TableroSoloLectura;
 
 /**
  * Determina las reglas del juego que se esta jugando en la aplicacion.
@@ -52,5 +53,5 @@ public abstract class ReglasJuego {
     public abstract Ficha jugadorInicial();
     
     
-    public abstract boolean esPosibleMover(Tablero t, Ficha turno);
+    public abstract boolean esPosibleMover(int fila, int columna, TableroSoloLectura t, Ficha turno);
 }

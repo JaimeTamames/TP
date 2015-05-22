@@ -56,8 +56,10 @@ public class ControladorGUI {
     public void finalizar() {
         this.fin = true;
     }
-    
-    public void ponerAutomatico(){
-        this.partida.getMovAutomatico();
+
+    public void ponerAutomatico() {
+        if (!Thread.interrupted()) {
+            this.partida.getMovAutomatico(this.factoria);
+        }
     }
 }

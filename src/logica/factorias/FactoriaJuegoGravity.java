@@ -3,7 +3,7 @@ package logica.factorias;
 import java.util.Scanner;
 import logica.Ficha;
 import logica.jugadores.Jugador;
-import logica.jugadores.aleatorios.JugadorAleatorioGravity;
+import logica.jugadores.inteligentes.JugadorInteligenteGravity;
 import logica.jugadores.humanos.JugadorHumanoGravity;
 import logica.movimiento.Movimiento;
 import logica.movimiento.MovimientoGravity;
@@ -24,7 +24,7 @@ public class FactoriaJuegoGravity implements FactoriaJuego {
 
     @Override
     public Jugador crearJugadorAleatorio() {
-        return new JugadorAleatorioGravity();
+        return new JugadorInteligenteGravity();
     }
 
     @Override

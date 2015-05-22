@@ -101,11 +101,25 @@ public class Partida implements Observable {
                     // Si no sucede nada de esto se cambia el turno
                     if (!this.terminada) {
 
-                        
-                        this.turno = (this.reglas.esPosibleMover(this.tablero, this.reglas.siguienteTurno(this.turno))) ? this.reglas.siguienteTurno(this.turno) : this.turno;
+                        Ficha jugador = this.turno;
+
+                        Ficha nt = this.turno;
+
+                        // si el siguiente jugador no puede poner ficha en ningun sitio el turno se queda en el jugador actual
+                        for (int f = 0; f < this.tablero.getAlto() && nt == this.turno; f++) {
+                            for (int c = 0; c < this.tablero.getAncho() && nt == this.turno; c++) {
+
+                                if (this.reglas.esPosibleMover(f, c, tablero, this.reglas.siguienteTurno(jugador))) {
+                                    nt = this.reglas.siguienteTurno(this.turno);
+                                }
+
+                            }
+                        }
+
+                        this.turno = nt;
 
                         for (Observador o : this.obs) {
-                            o.onMovimientoTerminado(this.tablero, this.turno, this.turno);
+                            o.onMovimientoTerminado(this.tablero, jugador, this.turno);
                         }
                     } else {
                         for (Observador o : this.obs) {
@@ -122,17 +136,18 @@ public class Partida implements Observable {
         }
     }
 
-    public Movimiento getMovAutomatico() {
+    public void getMovAutomatico(FactoriaJuego f) {
+
         //Esperar 2 segundos
         try {
-            Thread.sleep(2000);
+            Thread.sleep(Constantes.MSRETARDOJUGADORAUTOMATICO);
+            //Calcula y ejecuta un movimiento aleatorio, o, en su defecto inteligente (el que mas fichas gire)
+            Movimiento mv = f.crearJugadorAleatorio().getMovimiento(f, this.tablero, this.turno);
+            this.ejecutaMovimiento(mv);
+
         } catch (InterruptedException ex) {
             ex.getMessage();
         }
-        //Calcula un movimiento aleatorio, o, en su defecto inteligente (el que mas fichas gire)
-
-        //llama a EjecutaMovimiento con el movimiento premiamente calculado en el paso anterior       
-        return null;
 
     }
 
@@ -176,14 +191,14 @@ public class Partida implements Observable {
         ReglasJuego reglasAnteriores = this.reglas;
         this.reglas = reglas;
         this.tablero = reglas.iniciaTablero();
-        this.turno = Ficha.BLANCAS;
+        this.turno = reglas.jugadorInicial();
         this.terminada = false;
         this.ganador = Ficha.VACIA;
         this.jugadas.reset();
 
         if (reglasAnteriores == reglas) {
             for (Observador o : this.obs) {
-                o.onReiniciar(this.tablero, this.turno);
+                o.onReiniciar(this.tablero, reglas.jugadorInicial());
             }
         } else {
             for (Observador o : this.obs) {

@@ -3,6 +3,7 @@ package logica.reglas;
 import logica.Constantes;
 import logica.Ficha;
 import logica.tablero.Tablero;
+import logica.tablero.TableroSoloLectura;
 
 public class ReglasJuegoReversi extends ReglasJuego {
 
@@ -63,34 +64,38 @@ public class ReglasJuegoReversi extends ReglasJuego {
     }
 
     @Override
-    public boolean esPosibleMover(Tablero t, Ficha turno) {
-        
-        for(int fila = 0; fila < t.getAlto(); fila++){
-            for(int columna = 0; columna < t.getAncho(); columna++){
-                
-                if(t.getFicha(fila, columna) == Ficha.VACIA && posicionValida(t, fila, columna, turno)){
-                    return true;
-                }
-                
-            }
+    public boolean esPosibleMover(int fila, int columna, TableroSoloLectura t, Ficha turno) {
+
+        if (t.getFicha(fila, columna) == Ficha.VACIA && posicionValida(t, fila, columna, turno) > 0) {
+            return true;
         }
-        
+
         return false;
     }
 
-    public static boolean posicionValida(Tablero t, int fila, int columna, Ficha turno) {
+    /**
+     * devuelve el numero de fichas que voltea desde esa posición si devuelve 0
+     * es que la posición no es válida
+     *
+     * @param t
+     * @param fila
+     * @param columna
+     * @param turno
+     * @return numero de fichas que voltearía
+     */
+    public static int posicionValida(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         return validaPorDebajo(t, fila, columna, turno)
-                || validaPorEncima(t, fila, columna, turno)
-                || validaPorDerecha(t, fila, columna, turno)
-                || validaPorIzquierda(t, fila, columna, turno)
-                || validaDiagonalSupDer(t, fila, columna, turno)
-                || validaDiagonalInfDer(t, fila, columna, turno)
-                || validaDiagonalSupIzq(t, fila, columna, turno)
-                || validaDiagonalInfIzq(t, fila, columna, turno);
+                + validaPorEncima(t, fila, columna, turno)
+                + validaPorDerecha(t, fila, columna, turno)
+                + validaPorIzquierda(t, fila, columna, turno)
+                + validaDiagonalSupDer(t, fila, columna, turno)
+                + validaDiagonalInfDer(t, fila, columna, turno)
+                + validaDiagonalSupIzq(t, fila, columna, turno)
+                + validaDiagonalInfIzq(t, fila, columna, turno);
     }
 
-    public static boolean validaPorEncima(Tablero t, int fila, int columna, Ficha turno) {
+    public static int validaPorEncima(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones por encima.
         if (fila <= t.getAlto() - 3) {
@@ -103,15 +108,15 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 numFichas++;
                 f++;
             }
-            if (numFichas != 0 && t.getFicha(f, columna) == turno) {
-                return true;
+            if (numFichas > 0 && t.getFicha(f, columna) == turno) {
+                return numFichas;
             }
         }
 
-        return false;
+        return 0;
     }
 
-    public static boolean validaPorDebajo(Tablero t, int fila, int columna, Ficha turno) {
+    public static int validaPorDebajo(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones por debajo.
         if (fila >= 2) {
@@ -124,17 +129,15 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 numFichas++;
                 f--;
             }
-            if (numFichas != 0 && t.getFicha(f, columna) == turno) {
-                return true;
+            if (numFichas > 0 && t.getFicha(f, columna) == turno) {
+                return numFichas;
 
             }
         }
-        return false;
+        return 0;
     }
 
-    public static boolean validaPorDerecha(Tablero t, int fila, int columna, Ficha turno) {
-
-        boolean valido = false;
+    public static int validaPorDerecha(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones por la derecha.
         if (columna <= t.getAncho() - 3) {
@@ -147,16 +150,14 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 numFichas++;
                 c++;
             }
-            if (numFichas != 0 && t.getFicha(fila, c) == turno) {
-                return true;
+            if (numFichas > 0 && t.getFicha(fila, c) == turno) {
+                return numFichas;
             }
         }
-        return false;
+        return 0;
     }
 
-    public static boolean validaPorIzquierda(Tablero t, int fila, int columna, Ficha turno) {
-
-        boolean valido = false;
+    public static int validaPorIzquierda(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones por la izquierda.
         if (columna >= 2) {
@@ -170,13 +171,13 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 c--;
             }
             if (numFichas > 0 && t.getFicha(fila, c) == turno) {
-                return true;
+                return numFichas;
             }
         }
-        return false;
+        return 0;
     }
 
-    public static boolean validaDiagonalSupDer(Tablero t, int fila, int columna, Ficha turno) {
+    public static int validaDiagonalSupDer(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones en la diagonal superior derecha.
         if (fila <= t.getAlto() - 3 && columna <= t.getAncho() - 3) {
@@ -191,15 +192,15 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 f++;
                 c++;
             }
-            if (numFichas != 0 && t.getFicha(f, c) == turno) {
-                return true;
+            if (numFichas > 0 && t.getFicha(f, c) == turno) {
+                return numFichas;
 
             }
         }
-        return false;
+        return 0;
     }
 
-    public static boolean validaDiagonalSupIzq(Tablero t, int fila, int columna, Ficha turno) {
+    public static int validaDiagonalSupIzq(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones en la diagonal superior izquierda.
         if (fila <= t.getAlto() - 3 && columna >= 2) {
@@ -214,14 +215,14 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 f++;
                 c--;
             }
-            if (numFichas != 0 && t.getFicha(f, c) == turno) {
-                return true;
+            if (numFichas > 0 && t.getFicha(f, c) == turno) {
+                return numFichas;
             }
         }
-        return false;
+        return 0;
     }
 
-    public static boolean validaDiagonalInfDer(Tablero t, int fila, int columna, Ficha turno) {
+    public static int validaDiagonalInfDer(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones en la diagonal inferior derecha.
         if (fila >= 2 && columna <= t.getAncho() - 3) {
@@ -236,14 +237,14 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 f--;
                 c++;
             }
-            if (numFichas != 0 && t.getFicha(f, c) == turno) {
-                return true;
+            if (numFichas > 0 && t.getFicha(f, c) == turno) {
+                return numFichas;
             }
         }
-        return false;
+        return 0;
     }
 
-    public static boolean validaDiagonalInfIzq(Tablero t, int fila, int columna, Ficha turno) {
+    public static int validaDiagonalInfIzq(TableroSoloLectura t, int fila, int columna, Ficha turno) {
 
         //Comprueba todas las posiciones en la diagonal inferior izquierda.
         if (fila >= 2 && columna >= 2) {
@@ -258,11 +259,11 @@ public class ReglasJuegoReversi extends ReglasJuego {
                 f--;
                 c--;
             }
-            if (numFichas != 0 && t.getFicha(f, c) == turno) {
-                return true;
+            if (numFichas > 0 && t.getFicha(f, c) == turno) {
+                return numFichas;
             }
         }
-        return false;
+        return 0;
     }
 
 }

@@ -3,6 +3,7 @@ package logica.reglas;
 import logica.Constantes;
 import logica.Ficha;
 import logica.tablero.Tablero;
+import logica.tablero.TableroSoloLectura;
 
 public class ReglasJuegoConecta4 extends ReglasJuego {
 
@@ -31,7 +32,9 @@ public class ReglasJuegoConecta4 extends ReglasJuego {
     }
 
     @Override
-    public boolean esPosibleMover(Tablero t, Ficha turno) {
-        return true;
+    public boolean esPosibleMover(int fila, int columna, TableroSoloLectura t, Ficha turno) {
+        return fila < t.getAlto()
+                && columna < t.getAncho()
+                && t.getFicha(fila, columna) == Ficha.VACIA;
     }
 }

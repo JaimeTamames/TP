@@ -31,19 +31,21 @@ public class ModoAutomatico implements ModoJuego {
 
     @Override
     public void deshacerpulsado() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void tableroPulsado(int f, int c) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+               
     }
 
     private class ModoAutomaticoThread extends Thread {
 
         @Override
         public void run() {
-            controlador.ponerAutomatico();
+            if(!Thread.interrupted()){
+                controlador.ponerAutomatico();
+            }
         }
 
     };

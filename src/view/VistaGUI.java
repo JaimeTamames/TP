@@ -10,10 +10,14 @@ import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 import logica.Constantes;
 import logica.Ficha;
-import logica.Partida;
-import logica.factorias.*;
-import logica.jugadores.Jugador;
-import logica.movimiento.Movimiento;
+import logica.factorias.FactoriaJuegoComplica;
+import logica.factorias.FactoriaJuegoConecta4;
+import logica.factorias.FactoriaJuegoGravity;
+import logica.factorias.FactoriaJuegoReversi;
+import logica.modosDeJuego.ModoAutomatico;
+import logica.modosDeJuego.ModoHumano;
+import logica.modosDeJuego.ModoJuego;
+import logica.modosDeJuego.TipoTurno;
 import logica.tablero.TableroSoloLectura;
 import observador.Observador;
 import view.interfaz.JFrameVistaGUI;
@@ -22,6 +26,9 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
 
     private JFrameVistaGUI interfaz;
     private ControladorGUI ctrl;
+
+    private ModoJuego modoJuegoB;
+    private ModoJuego modoJuegoN;
 
     public VistaGUI(ControladorGUI ctrl) {
         this.interfaz = new JFrameVistaGUI(ctrl.getPartida().getTablero().getAlto(), ctrl.getPartida().getTablero().getAncho());
@@ -38,15 +45,30 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         this.interfaz.setVisible(true);
 
         this.ctrl = ctrl;
+        this.modoJuegoB = new ModoHumano(ctrl);
+        this.modoJuegoN = new ModoHumano(ctrl);
+
+        if (this.ctrl.getPartida().getTurno() == Ficha.BLANCAS) {
+            this.modoJuegoB.comenzar();
+        } else {
+            this.modoJuegoN.comenzar();
+        }
 
         this.addListeners();
     }
 
     @Override
     public void onReiniciar(TableroSoloLectura tab, Ficha turno) {
+                
         this.paintTablero(tab);
         this.interfaz.getjPanelPartida().getJButtonDeshacer().setEnabled(false);
         this.interfaz.getjLabelTurno().setText(turno.toString());
+
+        if (turno == Ficha.BLANCAS) {
+            this.modoJuegoB.comenzar();
+        } else {
+            this.modoJuegoN.comenzar();
+        }
     }
 
     @Override
@@ -61,17 +83,25 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         }
 
         this.interfaz.getjPanelPartida().getJButtonDeshacer().setEnabled(false);
+        this.modoJuegoB.terminar();
+        this.modoJuegoN.terminar();
     }
 
     @Override
-    public void onCambioJuego(TableroSoloLectura tab, Ficha turno) {
+    public void onCambioJuego(TableroSoloLectura tab, Ficha turno) {               
+        
         this.interfaz.resetTable(tab.getAlto(), tab.getAncho());
-
         this.paintTablero(tab);
         this.interfaz.setTitle(this.ctrl.getFactoria().toString());
         this.interfaz.getjPanelPartida().getJButtonDeshacer().setEnabled(false);
         this.interfaz.getjLabelTurno().setText(turno.toString());
 
+        if (turno == Ficha.BLANCAS) {
+            this.modoJuegoB.comenzar();
+        } else {
+            this.modoJuegoN.comenzar();
+        }
+        
     }
 
     @Override
@@ -94,6 +124,12 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         this.paintTablero(tab);
         this.interfaz.getjLabelTurno().setText(turno.toString());
         this.interfaz.getjPanelPartida().getJButtonDeshacer().setEnabled(true);
+
+        if (turno == Ficha.BLANCAS) {
+            this.modoJuegoB.comenzar();
+        } else {
+            this.modoJuegoN.comenzar();
+        }
     }
 
     @Override
@@ -124,16 +160,17 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         this.interfaz.getjPanelPartida().getJButtonReiniciar().addActionListener(this);
         //comboBoxCambioJuego
         this.interfaz.getjPanelCambioJuego().getjComboBoxTiposJuego().addActionListener(this);
-        //comboBoxTipoJugadorBlanco
-        this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorBlancas().addActionListener(this);
-        //comboBoxTipoJugadorNegro
-        this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorNegras().addActionListener(this);
         //cambiar
         this.interfaz.getjPanelCambioJuego().getjButtonCambiar().addActionListener(this);
         //aleatorio
         this.interfaz.getjButtonAleatorio().addActionListener(this);
         //salir
         this.interfaz.getjButtonSalir().addActionListener(this);
+
+        //comboBoxTipoJugadorBlanco
+        this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorBlancas().addActionListener(this);
+        //comboBoxTipoJugadorNegro
+        this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorNegras().addActionListener(this);
 
     }
 
@@ -144,7 +181,11 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         int f = this.interfaz.getjPanelTablero().getCellFromTable(me.getPoint()).y;
         int c = this.interfaz.getjPanelTablero().getCellFromTable(me.getPoint()).x;
 
-        this.ctrl.poner(f, c);
+        if (this.ctrl.getPartida().getTurno() == Ficha.BLANCAS) {
+            this.modoJuegoB.tableroPulsado(f, c);
+        } else {
+            this.modoJuegoN.tableroPulsado(f, c);
+        }
     }
 
     // INSERVIBLE
@@ -175,13 +216,19 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
 
         //deshacer
         if (this.interfaz.getjPanelPartida().getJButtonDeshacer().getActionCommand().equals(ae.getActionCommand())) {
-            this.ctrl.undo();
+            if (this.ctrl.getPartida().getTurno() == Ficha.BLANCAS) {
+                this.modoJuegoB.deshacerpulsado();
+            } else {
+                this.modoJuegoN.deshacerpulsado();
+            }
         } //reiniciar
         else if (this.interfaz.getjPanelPartida().getJButtonReiniciar().getActionCommand().equals(ae.getActionCommand())) {
+            this.modoJuegoB.terminar();
+            this.modoJuegoN.terminar();
             this.ctrl.reset(this.ctrl.getFactoria());
-        } //comboBox
-        else if (this.interfaz.getjPanelCambioJuego().getjComboBoxTiposJuego().getActionCommand().equals(ae.getActionCommand())) {
-
+        } //comboBox cambio de juego
+        else if (this.interfaz.getjPanelCambioJuego().getjComboBoxTiposJuego().equals(ae.getSource())) {
+            
             switch ((String) this.interfaz.getjPanelCambioJuego().getjComboBoxTiposJuego().getSelectedItem()) {
                 case "GRAVITY":
                     this.interfaz.getjPanelCambioJuego().getjLabelColumnas().setVisible(true);
@@ -211,6 +258,9 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
 
         }//cambiar
         else if (this.interfaz.getjPanelCambioJuego().getjButtonCambiar().getActionCommand().equals(ae.getActionCommand())) {
+            
+            this.modoJuegoB.terminar();
+            this.modoJuegoN.terminar();
 
             switch ((String) this.interfaz.getjPanelCambioJuego().getjComboBoxTiposJuego().getSelectedItem()) {
                 case "GRAVITY":
@@ -230,16 +280,59 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         } //aleatorio
         else if (this.interfaz.getjButtonAleatorio().getActionCommand().equals(ae.getActionCommand())) {
 
-            FactoriaJuego fac = this.ctrl.getFactoria();
-            Partida p = this.ctrl.getPartida();
-            Jugador j = fac.crearJugadorAleatorio();
-            Movimiento m = p.getMovimiento(fac, j);
-            
-            p.ejecutaMovimiento(m);
+            TableroSoloLectura tab = this.ctrl.getPartida().getTablero();
+
+            boolean fin = false;
+            int c = 0, f = 0;
+            while (!fin) {
+                c = (int) (tab.getAncho() * Math.random());
+                f = (int) (tab.getAlto() * Math.random());
+                if (tab.getFicha(f, c) == Ficha.VACIA && this.ctrl.getPartida().getReglas().esPosibleMover(f, c, tab, this.ctrl.getPartida().getTurno())) {
+                    fin = true;
+                }
+            }
+
+            //poner ficha aleatoria
+            if (this.ctrl.getPartida().getTurno() == Ficha.BLANCAS) {
+                this.modoJuegoB.tableroPulsado(f, c);
+            } else {
+                this.modoJuegoN.tableroPulsado(f, c);
+            }
 
         } //salir
         else if (this.interfaz.getjButtonSalir().getActionCommand().equals(ae.getActionCommand())) {
+            this.modoJuegoB.terminar();
+            this.modoJuegoN.terminar();
             this.interfaz.dispose();
+        } //cambio de modo juego en jugador blanco
+        else if (this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorBlancas().equals(ae.getSource())) {
+            
+            this.modoJuegoB.terminar();
+            
+            if (this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorBlancas().getSelectedItem().equals(TipoTurno.AUTOMATICO)) {
+                this.modoJuegoB = new ModoAutomatico(this.ctrl);
+            } else {
+                this.modoJuegoB = new ModoHumano(this.ctrl);
+            }
+            
+            if(this.ctrl.getPartida().getTurno() == Ficha.BLANCAS){
+                this.modoJuegoB.comenzar();                
+            }
+            
+        } //cambio de modo juego en jugador negro
+        else if (this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorNegras().equals(ae.getSource())) {
+            
+            this.modoJuegoN.terminar();
+            
+            if (this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorNegras().getSelectedItem().equals(TipoTurno.AUTOMATICO)) {
+                this.modoJuegoN = new ModoAutomatico(this.ctrl);
+            } else {
+                this.modoJuegoN = new ModoHumano(this.ctrl);
+            }
+            
+            if(this.ctrl.getPartida().getTurno() == Ficha.NEGRAS){
+                this.modoJuegoN.comenzar();                
+            }
         }
     }
 }

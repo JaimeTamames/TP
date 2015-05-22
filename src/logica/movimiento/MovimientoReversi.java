@@ -17,28 +17,28 @@ public class MovimientoReversi extends Movimiento {
     }
 
     private void voltea(Tablero t) {
-        if (ReglasJuegoReversi.validaPorDebajo(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaPorDebajo(t, fila, columna, turno) > 0) {
             this.volteaPorDebajo(t);
         }
-        if (ReglasJuegoReversi.validaPorEncima(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaPorEncima(t, fila, columna, turno) > 0) {
             this.volteaPorEncima(t);
         }
-        if (ReglasJuegoReversi.validaPorDerecha(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaPorDerecha(t, fila, columna, turno) > 0) {
             this.volteaPorDerecha(t);
         }
-        if (ReglasJuegoReversi.validaPorIzquierda(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaPorIzquierda(t, fila, columna, turno) > 0) {
             this.volteaPorIzquierda(t);
         }
-        if (ReglasJuegoReversi.validaDiagonalSupDer(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaDiagonalSupDer(t, fila, columna, turno) > 0) {
             this.volteaDiagonalSupDer(t);
         }
-        if (ReglasJuegoReversi.validaDiagonalInfDer(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaDiagonalInfDer(t, fila, columna, turno) > 0) {
             this.volteaDiagonalInfDer(t);
         }
-        if (ReglasJuegoReversi.validaDiagonalSupIzq(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaDiagonalSupIzq(t, fila, columna, turno) > 0) {
             this.volteaDiagonalSupIzq(t);
         }
-        if (ReglasJuegoReversi.validaDiagonalInfIzq(t, fila, columna, turno)) {
+        if (ReglasJuegoReversi.validaDiagonalInfIzq(t, fila, columna, turno) > 0) {
             this.volteaDiagonalInfIzq(t);
         }
     }
@@ -283,7 +283,7 @@ public class MovimientoReversi extends Movimiento {
         }
 
         //Comprueba si la posicion es valida y ejecuta el movimiento
-        if (ReglasJuegoReversi.posicionValida(t, this.fila, this.columna, this.turno)) {
+        if (ReglasJuegoReversi.posicionValida(t, this.fila, this.columna, this.turno) > 0) {
             this.voltea(t);
             t.ponerFicha(this.fila, this.columna, this.turno);
 
