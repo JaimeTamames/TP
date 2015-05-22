@@ -10,10 +10,10 @@ import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 import logica.Constantes;
 import logica.Ficha;
-import logica.factorias.FactoriaJuegoComplica;
-import logica.factorias.FactoriaJuegoConecta4;
-import logica.factorias.FactoriaJuegoGravity;
-import logica.factorias.FactoriaJuegoReversi;
+import logica.Partida;
+import logica.factorias.*;
+import logica.jugadores.Jugador;
+import logica.movimiento.Movimiento;
 import logica.tablero.TableroSoloLectura;
 import observador.Observador;
 import view.interfaz.JFrameVistaGUI;
@@ -66,7 +66,7 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
     @Override
     public void onCambioJuego(TableroSoloLectura tab, Ficha turno) {
         this.interfaz.resetTable(tab.getAlto(), tab.getAncho());
-        
+
         this.paintTablero(tab);
         this.interfaz.setTitle(this.ctrl.getFactoria().toString());
         this.interfaz.getjPanelPartida().getJButtonDeshacer().setEnabled(false);
@@ -230,20 +230,12 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         } //aleatorio
         else if (this.interfaz.getjButtonAleatorio().getActionCommand().equals(ae.getActionCommand())) {
 
-            TableroSoloLectura tab = this.ctrl.getPartida().getTablero();
-
-            boolean fin = false;
-            int c = 0, f = 0;
-            while (!fin) {
-                c = (int) (tab.getAncho() * Math.random());
-                f = (int) (tab.getAlto() * Math.random());
-                if (tab.getFicha(f, c) == Ficha.VACIA) {
-                    fin = true;
-                }
-            }
-
-            //poner ficha aleatoria
-            this.ctrl.poner(f, c);
+            FactoriaJuego fac = this.ctrl.getFactoria();
+            Partida p = this.ctrl.getPartida();
+            Jugador j = fac.crearJugadorAleatorio();
+            Movimiento m = p.getMovimiento(fac, j);
+            
+            p.ejecutaMovimiento(m);
 
         } //salir
         else if (this.interfaz.getjButtonSalir().getActionCommand().equals(ae.getActionCommand())) {

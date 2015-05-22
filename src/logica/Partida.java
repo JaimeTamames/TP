@@ -40,7 +40,7 @@ public class Partida implements Observable {
     public Partida(ReglasJuego reglas) {
         this.reglas = reglas;
         this.tablero = reglas.iniciaTablero();
-        this.turno = Ficha.BLANCAS;
+        this.turno = reglas.jugadorInicial();
         this.terminada = false;
         this.ganador = Ficha.VACIA;
         this.jugadas = new Pila();
