@@ -30,9 +30,9 @@ public class JPanelGestionJugadores extends JPanel {
     public void initComponents() {
 
         this.setLayout(new FlowLayout());
-        this.setPreferredSize(new Dimension(260, 100));
-        this.setMinimumSize(new Dimension(260, 100));
-        this.setBorder(BorderFactory.createTitledBorder("Gesión de jugadores"));
+        this.setPreferredSize(new Dimension(350, 100));
+        this.setMinimumSize(new Dimension(350, 100));
+        this.setBorder(BorderFactory.createTitledBorder("Gestion de jugadores"));
 
         TipoTurno tiposJugadores[] = {TipoTurno.HUMANO, TipoTurno.AUTOMATICO};
 

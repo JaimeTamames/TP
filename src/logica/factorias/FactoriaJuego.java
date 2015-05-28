@@ -12,7 +12,7 @@ public interface FactoriaJuego {
 
     public Movimiento crearMovimiento(int fila, int columna, Ficha color);
 
-    public Jugador crearJugadorAleatorio();
+    public Jugador crearJugadorInteligente();
 
     public Jugador crearJugadorHumano(Scanner sc);
 

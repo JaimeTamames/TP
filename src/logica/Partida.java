@@ -142,7 +142,7 @@ public class Partida implements Observable {
         try {
             Thread.sleep(Constantes.MSRETARDOJUGADORAUTOMATICO);
             //Calcula y ejecuta un movimiento aleatorio, o, en su defecto inteligente (el que mas fichas gire)
-            Movimiento mv = f.crearJugadorAleatorio().getMovimiento(f, this.tablero, this.turno);
+            Movimiento mv = f.crearJugadorInteligente().getMovimiento(f, this.tablero, this.turno);
             this.ejecutaMovimiento(mv);
 
         } catch (InterruptedException ex) {

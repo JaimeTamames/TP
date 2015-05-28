@@ -23,7 +23,7 @@ public class FactoriaJuegoReversi implements FactoriaJuego {
     }
 
     @Override
-    public Jugador crearJugadorAleatorio() {
+    public Jugador crearJugadorInteligente() {
         return new JugadorInteligenteReversi();
     }
 

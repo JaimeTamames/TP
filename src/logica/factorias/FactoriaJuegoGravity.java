@@ -23,7 +23,7 @@ public class FactoriaJuegoGravity implements FactoriaJuego {
     }
 
     @Override
-    public Jugador crearJugadorAleatorio() {
+    public Jugador crearJugadorInteligente() {
         return new JugadorInteligenteGravity();
     }
 

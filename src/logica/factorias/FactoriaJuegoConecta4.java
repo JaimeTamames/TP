@@ -23,7 +23,7 @@ public class FactoriaJuegoConecta4 implements FactoriaJuego {
     }
 
     @Override
-    public Jugador crearJugadorAleatorio() {
+    public Jugador crearJugadorInteligente() {
         return new JugadorInteligenteConecta4();
     }
 

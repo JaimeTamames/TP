@@ -117,6 +117,20 @@ public class VistaGUI implements Observador, MouseListener, ActionListener {
         if (!hayMas) {
             this.interfaz.getjPanelPartida().getJButtonDeshacer().setEnabled(false);
         }
+        
+        if(turno == Ficha.BLANCAS){
+        	
+        	if (this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorBlancas().getSelectedItem().equals(TipoTurno.AUTOMATICO)) {
+                this.ctrl.getPartida().deshacer();
+            }
+        	
+        }else{
+        	
+        	if (this.interfaz.getjPanelGestionJugadores().getjComboBoxJugadorNegras().getSelectedItem().equals(TipoTurno.AUTOMATICO)) {
+        		this.ctrl.getPartida().deshacer();
+            }
+        	
+        }
     }
 
     @Override

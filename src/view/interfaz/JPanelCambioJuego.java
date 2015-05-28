@@ -52,8 +52,8 @@ public class JPanelCambioJuego extends JPanel {
     private void init() {
 
         this.setLayout(new FlowLayout());
-        this.setPreferredSize(new Dimension(260, 150));
-        this.setMinimumSize(new Dimension(260, 150));
+        this.setPreferredSize(new Dimension(350, 150));
+        this.setMinimumSize(new Dimension(350, 150));
         this.setBorder(BorderFactory.createTitledBorder("Cambio de Juego"));
 
         String tiposJuego[] = {"CONECTA4", "COMPLICA", "GRAVITY", "REVERSI"};

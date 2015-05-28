@@ -89,13 +89,13 @@ public class ControladorConsola {
     public void ponerJugador(Ficha color, String tipoJugador) {
         if (color == Ficha.NEGRAS) {
             if (tipoJugador.equalsIgnoreCase("aleatorio")) {
-                this.jugadorN = factoria.crearJugadorAleatorio();
+                this.jugadorN = factoria.crearJugadorInteligente();
             } else if (tipoJugador.equalsIgnoreCase("humano")) {
                 this.jugadorN = factoria.crearJugadorHumano(this.in);
             }
         } else if (color == Ficha.BLANCAS) {
             if (tipoJugador.equalsIgnoreCase("aleatorio")) {
-                this.jugadorB = factoria.crearJugadorAleatorio();
+                this.jugadorB = factoria.crearJugadorInteligente();
             } else if (tipoJugador.equalsIgnoreCase("humano")) {
                 this.jugadorB = factoria.crearJugadorHumano(this.in);
             }

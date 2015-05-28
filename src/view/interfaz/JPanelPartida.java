@@ -28,8 +28,8 @@ public class JPanelPartida extends JPanel {
     private void init() {
 
         this.setLayout(new FlowLayout());
-        this.setPreferredSize(new Dimension(260, 120));
-        this.setMinimumSize(new Dimension(260, 120));
+        this.setPreferredSize(new Dimension(350, 120));
+        this.setMinimumSize(new Dimension(350, 120));
         this.setBorder(BorderFactory.createTitledBorder("Partida"));
 
         this.jButtonDeshacer = new JButton("Deshacer");

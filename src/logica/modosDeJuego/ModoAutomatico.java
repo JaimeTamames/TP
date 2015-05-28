@@ -22,7 +22,7 @@ public class ModoAutomatico implements ModoJuego {
 
     @Override
     public void terminar() {
-        // interrumpe la hebra si esta en ejecución.
+        // interrumpe la hebra si esta en ejecucion.
         if(this.execThread != null){
             this.execThread.interrupt();
             execThread = null;
