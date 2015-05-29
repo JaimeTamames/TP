@@ -3,6 +3,7 @@ package logica;
 import logica.tablero.Tablero;
 import exceptions.MovimientoInvalido;
 import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 import logica.factorias.FactoriaJuego;
 import logica.jugadores.Jugador;
 import logica.movimiento.Movimiento;
@@ -100,23 +101,10 @@ public class Partida implements Observable {
 
                     // Si no sucede nada de esto se cambia el turno
                     if (!this.terminada) {
-
+                        // almacenamos el turno actual
                         Ficha jugador = this.turno;
-
-                        Ficha nt = this.turno;
-
-                        // si el siguiente jugador no puede poner ficha en ningun sitio el turno se queda en el jugador actual
-                        for (int f = 0; f < this.tablero.getAlto() && nt == this.turno; f++) {
-                            for (int c = 0; c < this.tablero.getAncho() && nt == this.turno; c++) {
-
-                                if (this.reglas.esPosibleMover(f, c, tablero, this.reglas.siguienteTurno(jugador))) {
-                                    nt = this.reglas.siguienteTurno(this.turno);
-                                }
-
-                            }
-                        }
-
-                        this.turno = nt;
+                        // cambiamos el turno, si procede
+                        this.turno = this.reglas.siguienteTurno(this.turno, this.tablero);
 
                         for (Observador o : this.obs) {
                             o.onMovimientoTerminado(this.tablero, jugador, this.turno);
@@ -143,7 +131,17 @@ public class Partida implements Observable {
             Thread.sleep(Constantes.MSRETARDOJUGADORAUTOMATICO);
             //Calcula y ejecuta un movimiento aleatorio, o, en su defecto inteligente (el que mas fichas gire)
             Movimiento mv = f.crearJugadorInteligente().getMovimiento(f, this.tablero, this.turno);
-            this.ejecutaMovimiento(mv);
+            
+            
+            // Llamamos al ejecuta movimiento en la hebra de swing para evitar conflictos en la vista
+            SwingUtilities.invokeLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    ejecutaMovimiento(mv);
+                }
+            });
+            
 
         } catch (InterruptedException ex) {
             ex.getMessage();

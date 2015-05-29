@@ -34,15 +34,25 @@ public abstract class ReglasJuego {
      * Devuelve el turno que tendría la siguiente jugada.
      *
      * @param ultimo turno del jugador que realizo la ultima jugada.
+     * @param tablero para comprbar si el siguiente turno cambia o no
      * @return ficha del color al que perteneceel turno.
      */
-    public Ficha siguienteTurno(Ficha ultimo) {
+    public Ficha siguienteTurno(Ficha ultimo, TableroSoloLectura tablero) {
 
-        if (ultimo == Ficha.BLANCAS) {
-            return Ficha.NEGRAS;
+        Ficha siguienteTurno = (ultimo == Ficha.BLANCAS) ? Ficha.NEGRAS : Ficha.BLANCAS;
+
+        // si el siguiente jugador no puede poner ficha en ningun sitio el turno se queda en el jugador actual
+        for (int f = 0; f < tablero.getAlto(); f++) {
+            for (int c = 0; c < tablero.getAncho(); c++) {
+
+                if (this.esPosibleMover(f, c, tablero, siguienteTurno)) {
+                    return siguienteTurno;
+                }
+
+            }
         }
-
-        return Ficha.BLANCAS;
+        
+        return ultimo;
     }
 
     /**
@@ -51,7 +61,6 @@ public abstract class ReglasJuego {
      * @return ficha del color al que perteneceel turno.
      */
     public abstract Ficha jugadorInicial();
-    
-    
+
     public abstract boolean esPosibleMover(int fila, int columna, TableroSoloLectura t, Ficha turno);
 }
